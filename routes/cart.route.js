@@ -54,6 +54,15 @@ router.route("/:cartid")
       res.status(500).json({ success: false, message: "unable to get products", errorMessage: error.message })
     }
   })
+  .delete(async (req,res)=>{
+    try{
+      const {cartid} = req.params;
+      await Cart.findByIdAndRemove({_id: cartid})
+      res.status(200).json({success:true})
+    }catch(error){
+      res.status(500).json({ success: false, errorMessage: error.message })
+    }
+  })
 
 
 router.route("/:cartid/:productid")
