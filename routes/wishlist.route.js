@@ -26,14 +26,14 @@ router.route("/")
 
 router.route("/:wishid")
   .get(async (req, res) => {
-    try{
- const { wishid } = req.params;
-    const data = await Wishlist.findById(wishid).populate("products.productId");
-    res.status(200).json({ success: true, wishlistItems: data })
-    }catch (error) {
+    try {
+      const { wishid } = req.params;
+      const data = await Wishlist.findById(wishid).populate("products.productId");
+      res.status(200).json({ success: true, wishlistItems: data })
+    } catch (error) {
       res.status(500).json({ success: false, message: "unable to get products", errorMessage: error.message })
     }
-   
+
   })
   .post(async (req, res) => {
     try {
@@ -47,24 +47,16 @@ router.route("/:wishid")
       res.status(500).json({ success: false, message: "unable to get products", errorMessage: error.message })
     }
   })
-  .delete(async (req,res)=>{
-    try{
-      const {cartid} = req.params;
-      await Cart.findByIdAndRemove({_id: cartid})
-      res.status(200).json({success:true})
-    }catch(error){
+  .delete(async (req, res) => {
+    try {
+      const { wishid } = req.params;
+      await Wishlist.findByIdAndRemove({ _id: wishid })
+      res.status(200).json({ success: true })
+    } catch (error) {
       res.status(500).json({ success: false, errorMessage: error.message })
     }
   })
-  .delete(async (req,res)=>{
-    try{
-      const {wishid} = req.params;
-      await Wishlist.findByIdAndRemove({_id: wishid})
-      res.status(200).json({success:true})
-    }catch(error){
-      res.status(500).json({ success: false, errorMessage: error.message })
-    }
-  })
+
 
 
 router.route("/:wishid/:productid")

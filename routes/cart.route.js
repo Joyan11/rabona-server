@@ -30,17 +30,17 @@ router.route("/")
 
 router.route("/:cartid")
   .get(async (req, res) => {
-    try{
- const { cartid } = req.params;
-    const data = await Cart.findById(cartid).populate("products.productId");
-    if (!data) {
-      res.status(400).json({ success: false, message: "Cart is empty", errorMessage: error.message });
-    }
-    res.status(200).json({ success: true, cartItems: data })
-    }catch (error) {
+    try {
+      const { cartid } = req.params;
+      const data = await Cart.findById(cartid).populate("products.productId");
+      if (!data) {
+        res.status(400).json({ success: false, message: "Cart is empty", errorMessage: error.message });
+      }
+      res.status(200).json({ success: true, cartItems: data })
+    } catch (error) {
       res.status(500).json({ success: false, message: "unable to get products", errorMessage: error.message })
     }
-   
+
   })
   .post(async (req, res) => {
     try {
@@ -54,12 +54,12 @@ router.route("/:cartid")
       res.status(500).json({ success: false, message: "unable to get products", errorMessage: error.message })
     }
   })
-  .delete(async (req,res)=>{
-    try{
-      const {cartid} = req.params;
-      await Cart.findByIdAndRemove({_id: cartid})
-      res.status(200).json({success:true})
-    }catch(error){
+  .delete(async (req, res) => {
+    try {
+      const { cartid } = req.params;
+      await Cart.findByIdAndRemove({ _id: cartid })
+      res.status(200).json({ success: true })
+    } catch (error) {
       res.status(500).json({ success: false, errorMessage: error.message })
     }
   })

@@ -1,5 +1,5 @@
 
- const productList = [
+const productList = [
   {
     image:
       "https://footballmonk.in/wp-content/uploads/2020/07/buy-manchester-united-home-jersey-2020-21-online-in-india-1-1.webp",
@@ -146,4 +146,4 @@
   },
 ];
 
-module.exports = {productList}
+module.exports = { productList }
