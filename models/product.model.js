@@ -10,6 +10,7 @@ const ProductSchema = new Schema({
   club: String,
   type: String,
   brand: String,
+  discount:Number
 })
 
 const Product = mongoose.model("Product", ProductSchema);

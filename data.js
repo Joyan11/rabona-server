@@ -10,6 +10,7 @@ const productList = [
     club: "manutd",
     type: "home",
     brand: "addidas",
+    discount: 10,
   },
   {
     image:
@@ -21,6 +22,7 @@ const productList = [
     club: "barcelona",
     type: "home",
     brand: "nike",
+    discount: 20,
   },
   {
     image:
@@ -32,6 +34,7 @@ const productList = [
     club: "juventus",
     type: "home",
     brand: "addidas",
+    discount: 30,
   },
   {
     image:
@@ -43,7 +46,8 @@ const productList = [
     inWishList: "no",
     club: "arsenal",
     type: "home",
-    brand: "puma",
+    brand: "addidas",
+    discount: 10,
   },
   {
     image:
@@ -55,6 +59,7 @@ const productList = [
     club: "manutd",
     type: "away",
     brand: "addidas",
+    discount: 10,
   },
   {
     image:
@@ -67,6 +72,7 @@ const productList = [
     club: "chelsea",
     type: "home",
     brand: "nike",
+    discount: 20,
   },
   {
     image:
@@ -78,6 +84,7 @@ const productList = [
     club: "mancity",
     type: "home",
     brand: "puma",
+    discount: 30,
   },
   {
     image:
@@ -88,7 +95,8 @@ const productList = [
     delivery: "standard",
     club: "acmilan",
     type: "home",
-    brand: "addidas",
+    brand: "puma",
+    discount: 20,
   },
   {
     image: "https://footballmonk.in/wp-content/uploads/2020/10/third-kit-2.jpg",
@@ -98,7 +106,8 @@ const productList = [
     delivery: "fast",
     club: "arsenal",
     type: "third",
-    brand: "puma",
+    brand: "addidas",
+    discount: 20,
   },
   {
     image:
@@ -120,7 +129,8 @@ const productList = [
     delivery: "fast",
     club: "intermilan",
     type: "home",
-    brand: "addidas",
+    brand: "nike",
+    discount: 20,
   },
   {
     image:
@@ -131,7 +141,8 @@ const productList = [
     delivery: "standard",
     club: "liverpool",
     type: "away",
-    brand: "newbalance",
+    brand: "new balance",
+    discount: 10,
   },
   {
     image:
@@ -142,8 +153,10 @@ const productList = [
     delivery: "fast",
     club: "atlmadrid",
     type: "home",
-    brand: "addidas",
+    brand: "nike",
+    discount: 10,
   },
 ];
 
-module.exports = { productList }
+
+module.exports ={productList}
