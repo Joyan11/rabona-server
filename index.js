@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require("cors");
+const dbUrl = require("./database/url")
 const Productrouter = require("./routes/products.route");
 const CartRouter = require("./routes/cart.route");
 const WishRouter = require("./routes/wishlist.route");
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 
-dbConnect();
+dbConnect(dbUrl);
 
 app.use("/products",Productrouter);
 app.use("/cart",CartRouter);
