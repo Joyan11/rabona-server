@@ -1,24 +1,32 @@
 const express = require("express");
 const router = express.Router();
 const { Wishlist } = require("../models/wishlist.model");
-const {populateWishlist} = require("../utils/populateWishlist")
+const { populateWishlist } = require("../utils/populateWishlist")
 
 router.route("/")
   .get(async (req, res) => {
     try {
-      const data = await Wishlist.find({});
-      res.status(200).json({ success: true, wishlistItems: data })
+      const { userid } = req.user;
+      const data = await populateWishlist(userid);
+
+      if (!data) {
+        res.status(404).json({ success: false, messaage: "Items not found" })
+      } else {
+        res.status(200).json({ success: true, wishlistItems: data })
+      }
+
     } catch (error) {
       res.status(500).json({ success: false, message: "Internal Server Error", errorMessage: errorMessage.message })
     }
   })
   .post(async (req, res) => {
     try {
-      const products = req.body;
-      const NewWishlist = new Wishlist(products);
+      const { products } = req.body;
+      const { userid } = req.user;
+      console.log("wish api 1")
+      const NewWishlist = new Wishlist({ user: userid, products });
       const savedWishItem = await NewWishlist.save();
-      const data = await populateWishlist(savedWishItem._id);
-     
+      const data = await populateWishlist(savedWishItem.user);
       res.status(201).json({ success: true, wishlistItems: data })
     } catch (error) {
       res.status(500).json({ success: false, message: "Unable to add products to Wishlist", errorMessage: error.message })
@@ -28,8 +36,8 @@ router.route("/")
 router.route("/:wishid")
   .get(async (req, res) => {
     try {
-      const { wishid } = req.params;
-      const data = await populateWishlist(wishid);
+      const { userid } = req.user;
+      const data = await populateWishlist(userid);
       res.status(200).json({ success: true, wishlistItems: data })
     } catch (error) {
       res.status(500).json({ success: false, message: "unable to get products", errorMessage: error.message })
@@ -39,10 +47,11 @@ router.route("/:wishid")
   .post(async (req, res) => {
     try {
       const { products } = req.body;
-      const { wishid } = req.params;
-      await Wishlist.findByIdAndUpdate(wishid, { $addToSet: { products: products } }
+      const { userid } = req.user;
+      console.log("wish api 2")
+      await Wishlist.findOneAndUpdate({ user: userid }, { $addToSet: { products: products } }
       );
-      const data = await populateWishlist(wishid);
+      const data = await populateWishlist(userid);
 
       res.status(201).json({ success: true, wishlistItems: data });
     } catch (error) {
@@ -51,9 +60,8 @@ router.route("/:wishid")
   })
   .delete(async (req, res) => {
     try {
-      const { wishid } = req.params;
-      console.log(wishid)
-      await Wishlist.findByIdAndRemove({ _id: wishid })
+      const { userid } = req.user;
+      await Wishlist.findOneAndRemove({ user: userid })
       res.status(200).json({ success: true })
     } catch (error) {
       res.status(500).json({ success: false, message: "Unable to delete item from wishlist", errorMessage: error.message })
@@ -65,15 +73,15 @@ router.route("/:wishid")
 router.route("/:wishid/:productid")
   .delete(async (req, res) => {
     try {
-      const { wishid, productid } = req.params;
-      await Wishlist.findByIdAndUpdate(wishid, { $pull: { products: { _id: productid } } }
+      const { productid } = req.params;
+      const { userid } = req.user;
+      await Wishlist.findOneAndUpdate({ user: userid }, { $pull: { products: { _id: productid } } }
       );
-      const data = await populateWishlist(wishid);
+      const data = await populateWishlist(userid);
       res.status(200).json({ success: true, wishlistItems: data })
     } catch (error) {
       res.status(500).json({ success: false, message: "Unable to delete wishlist", errorMessage: error.message })
     }
-
   })
 
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const { Cart } = require("../models/cart.model");
 
-const populateCart = async (cartid)=> await Cart.findById(cartid).populate("products.productId");
+const populateCart = async (userid)=> await Cart.findOne({user:userid}).populate("products.productId");
 console.log("running")
 module.exports = {populateCart}
