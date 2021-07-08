@@ -9,6 +9,7 @@ router.route("/")
   .get(async (req, res) => {
     try {
       const data = await Product.find({});
+       data.__v = undefined;
       res.status(200).json({ success: true, productdata: data });
     } catch (error) {
       res.status(404).json({ success: false, message: "The server can not find the requested resource.", error: error.message })
@@ -19,6 +20,7 @@ router.route("/:productid")
     try {
       const {productid} = req.params;
       const data = await Product.findById(productid);
+       data.__v = undefined;
       res.status(200).json({ success: true, productdata: data });
     } catch (error) {
       res.status(404).json({ success: false, message: "The server can not find the requested resource.", error: error.message })
